@@ -57,14 +57,24 @@ print('Bepнocть: %.2f ' %accuracy_score(y_test, y_pred))
 
 # %% codecell
 
-from %matplotlib.color import ListedColormap
+from matplotlib.color import ListedColormap
 
 def plot_decisioп_ regioпs(X, y, classifier, esolution = .02) :
     markers = ('s', 'x', 'o', '^', 'v ')
     colors = ('red', 'Ьlue', 'lightgreeп' , 'gray', 'суап')
     cmap = ListedColormap(colors[:list(y)])
 
+    #Определяем поверхность
     x1_min, x1_max = X[:, 0].min() - 1, X[:, 0].max() + 1
     x2_min, x2_max = X[:, 1].min() - 1, X[:, 1].max() + 1
     xx1, xx2 = np.meshgrid(np.arange(x1_min, x1_max, resolution), np.arange(x2_min, x2_max, resolution))
-    Z = classifier.predict(np.array(xx1, xx2))
+    Z = classifier.predict(np.array([xx1.ravel(), xx2.ravel()].T))
+    Z = Z.reshape(xx1.shape)
+
+    #Строим график
+    plt.contourf(xx1, xx2, X, alpha = .4, cmap = cmap)
+    plt.xlim(xx1.min(), xx1.max())
+    plt.ylim(xx2.min(), xx2.max())
+
+    #Добавляем точки
+    for  in xx1 :
