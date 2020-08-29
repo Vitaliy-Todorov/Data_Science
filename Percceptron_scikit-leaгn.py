@@ -18,7 +18,7 @@ X_train, X_test, y_train, y_test = train_test_split(
 X, y, test_size = .3, random_state = 0)
 
 # %% codecell
-#стандартизация
+#Cтандартизация
 
 # В приведенном ниже примера мы загрузили класс StandardScaler из модуля предобработки
 # и инициализировали новый объект StandardScaler, который мы присвоили
@@ -57,12 +57,12 @@ print('Bepнocть: %.2f ' %accuracy_score(y_test, y_pred))
 
 # %% codecell
 
-from matplotlib.color import ListedColormap
+from matplotlib.colors import ListedColormap
 
-def plot_decisioп_ regioпs(X, y, classifier, esolution = .02) :
+def plot_decision_regions(X, y, classifier, test_idx = None, esolution = .02) :
     markers = ('s', 'x', 'o', '^', 'v ')
     colors = ('red', 'Ьlue', 'lightgreeп' , 'gray', 'суап')
-    cmap = ListedColormap(colors[:list(y)])
+    cmap = ListedColormap(colors[:list(np.unique(y))])
 
     #Определяем поверхность
     x1_min, x1_max = X[:, 0].min() - 1, X[:, 0].max() + 1
@@ -77,4 +77,12 @@ def plot_decisioп_ regioпs(X, y, classifier, esolution = .02) :
     plt.ylim(xx2.min(), xx2.max())
 
     #Добавляем точки
-    for  in xx1 :
+    for idx, cl in enumerate(np.unique(y)) :
+        plt.scatter(x = X[y == cl, 0], y = X[y == cl, 1], 
+                alpha = .8, color = cmap(idx), marker = markers[idx], label = cl)
+
+        # показать все образцы
+        if test_idx :
+            X_test, y_test = X[test_idx, :], y[test_idx]
+            plt.scatter(X_test[:, 0], X_test[: 1], c = '', alpha = 1,
+                    linewidths = 1, marker = 'o', s = 55, label = 'тестовый набор')
