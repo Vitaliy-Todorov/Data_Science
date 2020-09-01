@@ -20,5 +20,5 @@ plt.yticks([0, .5, 1])
     #Показывает какаие координаты отображать на оси y
 plt.ylim(-.1, 1.1)
 plt.xlabel('z')
-plt.ylabel('$\phi (z)')
+plt.ylabel('$\phi (z)$')
 plt.show()
