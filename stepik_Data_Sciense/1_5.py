@@ -66,10 +66,17 @@ students_performance[student_stats['parental level of education'].isin(["bachelo
 #Показать название всех столбцов
 list(students_performance_)
 
-#Выбираем столбци в которых есть слово'score'
+#DataFrame.students_performance_() - Выбираем столбци в которых есть слово'score'
 subject_score = [i for i in list(students_performance_) if 'score' in i]
 subject_score
 students_performance_[subject_score]
 
 #Выбираем столбци в которых есть слово'score'
 students_performance_.filter(like = 'score')
+
+student_performance_with_names = student_performance.iloc[[0, 3, 4, 7, 8]]
+student_performance_with_names.index = ['Cersei', 'Tywin', 'Gregor', 'Joffrey', 'Ilyn Payne']       #переименовать строки
+student_performance_with_names
+
+#Выбираем строки в которых есть буква 'i'
+student_performance_with_names.filter(like = 'i', axis=0)
