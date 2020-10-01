@@ -49,7 +49,7 @@ students_performance.sort_values(['gender', 'math_score'], ascending=False)
 #пять верхних столбцов каждой из групп
 students_performance.sort_values(['gender', 'math_score'], ascending=False).groupby(['gender', 'math_score']).head(5)
 
-#Сщздание новых столбцов
+#Создание новых столбцов
 students_performance['total_score'] = students_performance.math_score \
         + students_performance.reading_score \
         + students_performance.writing_score
