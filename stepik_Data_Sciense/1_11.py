@@ -10,7 +10,6 @@ sns.set(rc = {'figure.figsize' : (9, 6)})
 event_data = pd.read_csv('C:\programming\Data_Science\working\stepik_Data_Sciense\event_data_train.csv')
 submissions_data = pd.read_csv('C:\programming\Data_Science\working\stepik_Data_Sciense\submissions_data_train.csv')
 
-# %% codecell
 event_data['date'] = pd.to_datetime(event_data.timestamp, unit = 's')
 event_data['day'] = event_data.date.dt.date
 event_data.head(10)
@@ -64,7 +63,7 @@ users_data = event_data.groupby('user_id', as_index = False).agg({'timestamp': '
 users_data.head(7)
 
 now = 1526772811
-#После этого времени считаем что ученик дропнклся
+#После этого времени считаем что ученик дропнулся
 drop_out_threshold = 30 * 24 * 60 * 60
 #Разность текущим днём (1526772811) и последним посещением
 users_data['is_gone_user'] = (now - users_data.last_timestamp) > drop_out_threshold
@@ -72,4 +71,40 @@ users_data.head(7)
 
 # %% codecell
 user_scores.head()
-users_data.merge(user_scores).head()
+#merge() - соединяет два детафрейма users_data и user_scores
+users_data.merge(user_scores).head(7)
+#При таклм варианте у нас теряются данные, одной из таблиц, при условии, что им нет соответствия данным в другой таблице.
+#Что бы не происходило подобного, вместо отсутствующих данных будем ставить Nan
+users_data.merge(user_scores, how = 'outer').head(7)
+#Для того, что бы сохранить значени определённого слобца, нужно указать on = ''
+users_data = users_data.merge(user_scores, on = 'user_id', how = 'outer')
+#Заполним пропущенные данные нулём
+users_data = users_data.fillna(0)
+users_data.head(7)
+
+#Число удачно пройденных степиков
+user_event_data = event_data.pivot_table(index = 'user_id', columns = 'action',
+            values = 'step_id', aggfunc = 'count', fill_value = 0)
+user_event_data.head()
+
+users_data = users_data.merge(user_event_data, on = 'user_id', how = 'outer')
+
+#число уникальных дней
+users_days = event_data.groupby('user_id').day.nunique() \
+        .to_frame().reset_index()
+#Перейти от серии к датафрейму. Обновить индексы
+users_days.head(7)
+
+users_data = users_data.merge(users_days, how = 'outer')
+
+#Успешно прошедшие курс (прошедшие более 170 степиков)
+users_data['passed_corse'] = users_data.passed > 170
+users_data.head()
+
+users_data.groupby('passed_corse').count()
+
+100 * 1425 / 19234
+
+#Проверяем, не потеряли ли мы данные
+users_data.user_id.nunique()
+event_data.user_id.nunique()

@@ -35,6 +35,7 @@ event_data_dey_user.head()
 event_data_dey_user.plot()
 
 # %% codecell
+#считаем сколько степиков прошёл каждый пользователь
 #Неправильное решение, мы не учитываем тех пользователе , что не решили ни одного step
 step_passed_user = event_data[event_data.action == 'passed'] \
         .groupby('user_id', as_index=False).agg({'step_id' : 'count'}) \
