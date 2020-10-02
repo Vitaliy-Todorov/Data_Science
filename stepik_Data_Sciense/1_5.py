@@ -12,7 +12,7 @@ students_performance.gender == 'female'
 
 type(students_performance.gender == 'female')
 
-#вывести стодбци со сторома, в которых gender принимает значение 'female'
+#вывести столбци со сторома, в которых gender принимает значение 'female'
 students_performance.loc[students_performance.gender == 'female', ['gender', 'writing score']]
 
 mean_writing_score = students_performance['writing score'].mean()
