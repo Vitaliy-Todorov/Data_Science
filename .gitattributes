@@ -1,1 +1,2 @@
 *.csv filter=lfs diff=lfs merge=lfs -text
+/stepik_Data_Sciense/git[[:space:]]remote[[:space:]]add[[:space:]]origin[[:space:]]https://github.com/Vitaliy-Todorov/Data_Science filter=lfs diff=lfs merge=lfs -text
