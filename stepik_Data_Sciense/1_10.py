@@ -16,7 +16,7 @@ event_data.head(10)
 #Смотрим какие значения может прнимать столбец action
 event_data.action.unique()
 
-#Представляем timestamp в види читаемого формата данных
+#Представляем timestamp в виде читаемого формата данных
 event_data['date'] = pd.to_datetime(event_data.timestamp, unit = 's')
 event_data.head()
 
@@ -44,6 +44,8 @@ step_passed_user.head()
 step_id_passed_user.step_passed.hist()
 
 #Правильное решение
+#считаем сколько степиков прошёл каждый пользователь
+#pivot_table() - Группируем данные и выполняем для групп указанную функцию
 #index - задаёт строки, columns - задаёт столбци.
 #values - значения (параметр) по которому будем проводить анализ.
 #aggfunc - функция которую мы применяем к values.
