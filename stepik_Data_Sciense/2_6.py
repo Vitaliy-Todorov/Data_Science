@@ -27,7 +27,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.33, rand
 clf = tree.DecisionTreeClassifier()
 #parametrs - набор параметров для clf
 parametrs = {'criterion': ['gini', 'entropy'], 'max_depth': range(1, 30)}
-#GridSearchCV - лучшее решение найденное на крос ваидации
+#GridSearchCV - лучшее решение найденное на кросваидации
 grid_search_CV_clf = GridSearchCV(clf, parametrs, cv = 5)
 grid_search_CV_clf.get_params().keys()
 grid_search_CV_clf.fit(X_train, y_train)
